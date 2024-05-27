@@ -65,6 +65,8 @@ This guide provides a step-by-step walkthrough to set up and run a CI pipeline o
 ## Step 8: Add VM to Agent Pool
 
 1. In Azure DevOps, navigate to settings (left corner).
+![agentpool](https://github.com/vsingh55/Git2Azure-Pipeline-Migration/assets/138707342/cee1f302-bbd5-41ce-9afb-8b1094ec9f40)
+
 2. Search for and select "Agent Pools".
 3. Delete any existing agents to ensure only your agents are used.
 
