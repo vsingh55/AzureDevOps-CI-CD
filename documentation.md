@@ -79,7 +79,6 @@ For more details, visit the official documentation: [Azure DevOps self-hosted Li
 3. Follow the on-screen instructions and run the appropriate commands on your VM.
 ![2 addingagentpool](https://github.com/vsingh55/Git2Azure-Pipeline-Migration/assets/138707342/d20c28d3-bc27-46f9-b1b4-f7af8abc903c)
 
-![3 ConnectdAzureAgent](https://github.com/vsingh55/Git2Azure-Pipeline-Migration/assets/138707342/1bcb308d-0561-4e43-ac57-31ced035935c)
 
 
 ### For Linux Users:
@@ -104,6 +103,8 @@ Finally, run:
 ```
 
 Now the agent is listening for jobs.
+
+![3 ConnectdAzureAgent](https://github.com/vsingh55/Git2Azure-Pipeline-Migration/assets/138707342/1bcb308d-0561-4e43-ac57-31ced035935c)
 
 ![4 VerifyConnection](https://github.com/vsingh55/Git2Azure-Pipeline-Migration/assets/138707342/a50ebffa-21ca-4bb7-a48e-44632981174a)
 
