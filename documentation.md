@@ -85,8 +85,14 @@ For more details, visit the official documentation: [Azure DevOps self-hosted Li
 
 ```sh
 wget https://vstsagentpackage.azureedge.net/agent/3.239.1/vsts-agent-linux-x64-3.239.1.tar.gz
+
+ 
+# install and setup docker to run docker files on azureagent
 sudo apt update
 sudo apt install docker.io
+sudo usermod -aG docker azureuser
+sudo systemctl restart docker
+
 mkdir myagent && cd myagent
 tar zxvf vsts-agent-linux-x64-3.239.1.tar.gz
 ./config.sh
