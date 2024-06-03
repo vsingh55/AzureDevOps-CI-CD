@@ -44,7 +44,8 @@ This guide provides a step-by-step walkthrough to set up and run a CI pipeline o
 ## Step 4: SSH into the VM
 
 1. Use terminal (Linux/Mac) or Putty (Windows) to SSH into the VM.
-2. Use the following URL to SSH: [https://dev.azure.com/login](https://dev.azure.com/login).
+2. Use the following URL to SSH: [https://dev.azure.com/login](https://dev.azure.com/login). 
+# correct it 
 
 ## Step 5: Set Up a New Project in Azure DevOps
 
@@ -84,9 +85,6 @@ For more details, visit the official documentation: [Azure DevOps self-hosted Li
 ### For Linux Users:
 
 ```sh
-wget https://vstsagentpackage.azureedge.net/agent/3.239.1/vsts-agent-linux-x64-3.239.1.tar.gz
-
- 
 # install and setup docker to run docker files on azureagent
 sudo apt update
 sudo apt install docker.io
@@ -94,6 +92,7 @@ sudo usermod -aG docker azureuser
 sudo systemctl restart docker
 
 mkdir myagent && cd myagent
+wget https://vstsagentpackage.azureedge.net/agent/3.239.1/vsts-agent-linux-x64-3.239.1.tar.gz
 tar zxvf vsts-agent-linux-x64-3.239.1.tar.gz
 ./config.sh
 ```
