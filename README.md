@@ -28,6 +28,7 @@ This project demonstrates how to set up a **CI/CD pipeline for Microservices usi
 - Azure account
 - SSH client (e.g., terminal, PuTTY)
 - Git
+- [Azure DevOps self-hosted Linux Agent](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/linux-agent?view=azure-devops).
 
 ### Steps
 1. **Sign up for an Azure account.**
