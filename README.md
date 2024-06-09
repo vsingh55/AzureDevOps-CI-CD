@@ -21,6 +21,7 @@ This project demonstrates how to set up a **CI/CD pipeline for Microservices usi
   - [License](#license)
   - [Acknowledgement](#acknowledgement)
 
+![diagram-export-9-6-2024-2_17_46-am](https://github.com/vsingh55/Git2Azure-Migration-CI-CD/assets/138707342/659ddc45-2643-4de7-a232-ace9b8a84366)
 ## Installation
 
 ### Prerequisites
