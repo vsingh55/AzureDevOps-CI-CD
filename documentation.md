@@ -1,5 +1,5 @@
-# Azure Pipelines Migration
-This section details the migration of the project to Azure Pipelines.
+# Vote-App: CI/CD with AzureDevOps and ArgoCD
+This section talks in detail about project workflow, what steps has been taken & leaveraging the power of devops tools and tech-world.
 
 ## Overview
 
@@ -20,9 +20,9 @@ Azure Pipelines offers advanced automation capabilities, allowing us to automate
 ### Enhanced Visibility and Reporting: 
 Azure Pipelines provides comprehensive insights into the status and performance of our builds and deployments, enabling better decision-making and troubleshooting.
 
-## Migration Process
+# **Migration Process**
 The steps taken to migrate the project to Azure Pipelines:
-# Project Setup Guide
+# Project Setup Guide for CI
 
 This guide provides a step-by-step walkthrough to set up and run a CI pipeline on Azure DevOps for your microservices project. Follow each step carefully to ensure a successful setup.
 
@@ -40,12 +40,16 @@ This guide provides a step-by-step walkthrough to set up and run a CI pipeline o
 
 1. In the Azure Portal, create a new Container Registry.
 2. In the same resource group, provision a new Virtual Machine (VM).
-
+> Note: You can provision self-hosted-agent & container registry with the [terraform](Terraform). 
 ## Step 4: SSH into the VM
 
 1. Use terminal (Linux/Mac) or Putty (Windows) to SSH into the VM.
-2. Use the following URL to SSH: [https://dev.azure.com/login](https://dev.azure.com/login). 
-# correct it 
+   ```
+   sudo chmod 400 ~/.ssh/id_rsa.pub
+   ssh -i ~/.ssh/id_rsa.pub azureuser@<public_ip> 
+   ```
+3. Use the following URL to SSH: [https://dev.azure.com/login](https://dev.azure.com/login). 
+
 
 ## Step 5: Set Up a New Project in Azure DevOps
 
@@ -62,6 +66,9 @@ This guide provides a step-by-step walkthrough to set up and run a CI pipeline o
 1. Go to User Settings in Azure DevOps.
 2. Create a Personal Access Token (PAT). This will be used in later steps.
 3. Copy & save it.
+![pat](https://github.com/vsingh55/Git2Azure-Migration-CI-CD/assets/138707342/253131e1-33fa-4d6c-a2d6-7a85ade45db8)
+![addingagent](https://github.com/vsingh55/Git2Azure-Migration-CI-CD/assets/138707342/01c7c093-88fe-4186-a5c4-1e08195c63a2)
+
 
 ## Step 8: Add VM to Agent Pool
 
@@ -98,7 +105,7 @@ tar zxvf vsts-agent-linux-x64-3.239.1.tar.gz
 ```
 
 When prompted, enter:
-- Server URL: `https://dev.azure.com/{your-organization}`  #replace orgnization with yours
+- Server URL: `https://dev.azure.com/{your-organization}`  #replace orgnization with yours look at top left corner like mine **vijaykumarsingh3**
 - Personal Access Token: Your PAT that saved in step-7.
 
 Finally, run:
@@ -106,6 +113,7 @@ Finally, run:
 ```sh
 ./run.sh
 ```
+> Note: Can refer below picture to add agent pool.
 
 Now the agent is listening for jobs.
 
@@ -123,15 +131,45 @@ Now the agent is listening for jobs.
    - Choose your container registry and fill in the details.
    - A template file will open; use the corresponding YAML code for the respective pipeline and run it.
 
-Refer to the updated .yml files in the [Pipeline folder](https://github.com/vsingh55/Git2Azure-Pipeline-Migration/tree/main/Pipelines).
+> Refer to the updated .yml files in the [Pipeline folder](https://github.com/vsingh55/Git2Azure-Pipeline-Migration/tree/main/Pipelines) make sure don't copy and paste files directly just make neccessary changes for build and push stage.
+
+![allpipelines](https://github.com/vsingh55/Git2Azure-Migration-CI-CD/assets/138707342/d84ea25e-2848-4043-aa22-5c4ea1c39c29)
+
+> Might be possible ecountering error while worker-service pipeline run suggesting some changes in git_repo/Worker/Dockerfile
+```
+FROM --platform=linux mcr.microsoft.com/dotnet/sdk:7.0 as build    //replace build plateform with linux
+ARG TARGETPLATFORM
+ARG TARGETARCH
+ARG BUILDPLATFORM
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
+
+WORKDIR /source
+COPY *.csproj .
+RUN dotnet restore  // removing targetarch
+
+COPY . .
+RUN dotnet publish -c release -o /app --self-contained false --no-restore     // removing targetarch
+
+# app image
+FROM mcr.microsoft.com/dotnet/runtime:7.0
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["dotnet", "Worker.dll"]
+```
 
 ## Step 11: Monitor Jobs
 
-You should now see jobs running in your terminal.
+You should now see jobs running in your terminal. <br>
+Verify your pipelines are working by changing in vote/app.py without effecting code then commit change, vote-service pipeline should be working.
 
 ## What have you done ?
 
-Congratulations! You have successfully set up the **CI part of project**. Enjoy your streamlined development and deployment process.
+**Congratulations!** You have successfully set up the **CI part of project**. Enjoy your streamlined development and deployment process.
 
-### Pipeline Configuration
-For pipeline codr visit to Pipeline folder.
+
+# Project Setup Guide for CD
+
+This guide provides a step-by-step walkthrough to set up and run a CI/CD pipeline on Azure DevOps with GitOps[**ArgoCD**] for your microservices project. Follow each step carefully to ensure a successful setup.
+
+
+

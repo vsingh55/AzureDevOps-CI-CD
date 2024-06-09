@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -x
 
 # Parameters
 SERVICE_NAME=$1

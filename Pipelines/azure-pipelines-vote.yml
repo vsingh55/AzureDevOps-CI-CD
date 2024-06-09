@@ -4,7 +4,7 @@
 
 trigger:
   paths:
-    include:
+    include: 
       - vote/*
 
 resources:
@@ -12,10 +12,10 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'a254849e-dd03-49de-b388-d8b911180d18'
+  dockerRegistryServiceConnection: 'this Will be automatically generated'
   imageRepository: 'voteapp'
-  containerRegistry: 'appcicd.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/result/Dockerfile'
+  containerRegistry: 'vijayazurecicd.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/vote/Dockerfile'
   tag: '$(Build.BuildId)'
 
 pool:
@@ -29,7 +29,7 @@ stages:
     displayName: Build
     steps:
     - task: Docker@2
-      displayName: Build an image to container registry
+      displayName: Build an image to Azure container registry
       inputs:
         containerRegistry: '$(dockerRegistryServiceConnection)'
         repository: '$(imageRepository)'
@@ -44,9 +44,22 @@ stages:
     displayName: Push
     steps:
     - task: Docker@2
-      displayName: Build an image to container registry
+      displayName: Push an image to Azure container registry
       inputs:
         containerRegistry: '$(dockerRegistryServiceConnection)'
         repository: '$(imageRepository)'
         command: 'push'
         tags: '$(tag)'
+
+# Update stage will be added later in Continuous Delivery.
+- stage: update
+  displayName: update stage
+  jobs:
+  - job: update
+    displayName: updating K8s manifest
+    steps:
+    - task: ShellScript@2
+      inputs:
+        scriptPath: 'scripts/updateK8sManifests.sh'
+        args: 'vote $(imageRepository) $(tag)'
+    

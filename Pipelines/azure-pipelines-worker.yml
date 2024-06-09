@@ -15,7 +15,7 @@ variables:
   dockerRegistryServiceConnection: 'b43bce40-7a71-41b5-acf4-d924c07706e8'
   imageRepository: 'workerapp'
   containerRegistry: 'appcicd.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/result/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/worker/Dockerfile'
   tag: '$(Build.BuildId)'
 
 pool:
@@ -37,7 +37,7 @@ stages:
         command: 'build'
         Dockerfile: 'worker/Dockerfile'
         tags: '$(tag)'
-
+# if you want to push can use it otherwise leave Push Stage.
 - stage: Push
   displayName: Push stage
   jobs:

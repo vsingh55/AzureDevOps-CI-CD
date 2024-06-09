@@ -3,7 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
- paths: 
+ paths:
    include:
      - result/*
 
@@ -12,42 +12,53 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'c12abf04-e530-428e-bc33-65212eaa119c'
+  dockerRegistryServiceConnection: 'this Will be automatically generated dont change.'
   imageRepository: 'resultapp'
-  containerRegistry: 'appcicd.azurecr.io'
+  containerRegistry: 'vijayazurecicd.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/result/Dockerfile'
   tag: '$(Build.BuildId)'
 
 pool:
- name: 'azureagent'
+  name: 'azureagent' 
 
 stages:
 - stage: Build
-  displayName: Build
+  displayName: Build stage
   jobs:
   - job: Build
     displayName: Build
-
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build an image to Azure container registry
       inputs:
         containerRegistry: '$(dockerRegistryServiceConnection)'
         repository: '$(imageRepository)'
         command: 'build'
         Dockerfile: 'result/Dockerfile'
         tags: '$(tag)'
+
 - stage: Push
-  displayName: Push
+  displayName: Push stage
   jobs:
   - job: Push
     displayName: Push
-
     steps:
     - task: Docker@2
-      displayName: Push the image
+      displayName: Push an image to Azure container registry
       inputs:
         containerRegistry: '$(dockerRegistryServiceConnection)'
         repository: '$(imageRepository)'
-        command: 'push'
+        command: 'Push'
         tags: '$(tag)'
+# Update stage will be added later in Continuous Delivery.
+- stage: update
+  displayName: update stage
+  jobs:
+  - job: update
+    displayName: Updating latest image name to K8s manifest file.
+    steps:
+
+    - task: ShellScript@2
+      inputs:
+        scriptPath: 'scripts/updateK8sManifests.sh'
+        args: 'result $(imageRepository) $(tag)'
