@@ -139,7 +139,7 @@ This project demonstrates how to set up a **CI/CD pipeline for Microservices usi
      ```
 
 ## Blog
-- For detailed instructions and documentation, visit the [blog](blog.vijaysingh.cloud).
+- For detailed instructions and documentation, visit the [blog](https://blogs.vijaysingh.cloud/project-building-a-cicd-pipeline-with-azure-devops-and-argocd).
 
 ## License
 - This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
