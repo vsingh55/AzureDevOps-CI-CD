@@ -1,6 +1,6 @@
 # Azure DevOps CI/CD
 
-This project demonstrates how to set up a **CI/CD pipeline for Microservices using Azure DevOps and ArgoCD to deploy microservices**. The pipeline handles building and pushing Docker images to Azure Container Registry and deploying them to a Kubernetes cluster managed by ArgoCD. This ensures a streamlined, automated, and scalable deployment process, providing continuous integration and continuous delivery capabilities.
+This project demonstrates how to set up a **CI/CD pipeline using Azure DevOps and ArgoCD to deploy microservices**. The pipeline handles building and pushing Docker images to Azure Container Registry and deploying them to a Kubernetes cluster managed by ArgoCD. This ensures a streamlined, automated, and scalable deployment process, providing continuous integration and continuous delivery capabilities.
 
 ## Table of Contents
 - [Azure DevOps CI/CD](#azure-devops-cicd)
